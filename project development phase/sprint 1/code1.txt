@@ -1,0 +1,22 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+flights=pd.read_csv('/home/vaishali/projects/python_proj/Flight/flights.csv')
+flights=flights.sample(n=100000)
+flights.head()
+flights.shape
+flights.isnull().values.any()
+flights.isnull().sum()
+sns.countplot(x='CANCELLATION_REASON',data=flights)
+sns.countplot(x="MONTH",hue="CANCELLATION_REASON",data=flights)
+plt.figure(figsize=(10, 10))
+axis = sns.countplot(x=flights['ORIGIN_AIRPORT'], data =flights, order=flights['ORIGIN_AIRPORT'].value_counts().iloc[:20].index)
+axis.set_xticklabels(axis.get_xticklabels(), rotation=90, ha="right")
+plt.tight_layout()
+plt.show()
+axis = plt.subplots(figsize=(10,14))
+Name = flights["AIRLINE"].unique()
+size = flights["AIRLINE"].value_counts()
+plt.pie(size,labels=Name,autopct='%5.0f%%')
+plt.show()
