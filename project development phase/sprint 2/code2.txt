@@ -1,0 +1,29 @@
+axis = plt.subplots(figsize=(20,14))
+sns.heatmap(flights.corr(),annot = True)
+plt.show()
+corr=flights.corr()
+corr
+variables_to_remove=["YEAR","FLIGHT_NUMBER","TAIL_NUMBER","DEPARTURE_TIME","TAXI_OUT","WHEELS_OFF","ELAPSED_TIME","AIR_TIME","WHEELS_ON","TAXI_IN","ARRIVAL_TIME","DIVERTED","CANCELLED","CANCELLATION_REASON","AIR_SYSTEM_DELAY", "SECURITY_DELAY","AIRLINE_DELAY","LATE_AIRCRAFT_DELAY","WEATHER_DELAY","SCHEDULED_TIME","SCHEDULED_ARRIVAL"]
+flights.drop(variables_to_remove,axis=1,inplace= True)
+flights.columns
+airport = pd.read_csv('/home/vaishali/projects/python_proj/Flight/airports.csv')
+airport
+flights.loc[~flights.ORIGIN_AIRPORT.isin(airport.IATA_CODE.values),'ORIGIN_AIRPORT']='OTHER'
+flights.loc[~flights.DESTINATION_AIRPORT.isin(airport.IATA_CODE.values),'DESTINATION_AIRPORT']='OTHER'
+flights
+print(flights.ORIGIN_AIRPORT.nunique())
+print(flights.DESTINATION_AIRPORT.nunique())
+print(flights.AIRLINE.nunique())
+flights=flights.dropna()
+flights
+flights.shape
+df=pd.DataFrame(flights)
+df['DAY_OF_WEEK']= df['DAY_OF_WEEK'].apply(str)
+df["DAY_OF_WEEK"].replace({"1":"SUNDAY", "2": "MONDAY", "3": "TUESDAY", "4":"WEDNESDAY", "5":"THURSDAY", "6":"FRIDAY", "7":"SATURDAY"},inplace=True)
+flights
+dums = ['AIRLINE','ORIGIN_AIRPORT','DESTINATION_AIRPORT','DAY_OF_WEEK']
+df_cat=pd.get_dummies(df[dums],drop_first=True)
+df_cat
+df_cat.columns
+df.columns
+flights.columns
